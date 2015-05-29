@@ -33,6 +33,8 @@ class List {
      }
 };
 
+/** \главная функция
+ */
 int main() {
     int N = 0;
     char type;

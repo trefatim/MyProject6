@@ -11,24 +11,24 @@ using namespace std;
 template < typename T >
 
 class List {
-	 T * lis; 
-     int N;
+	 List* pNext; 
+     T N;
  public:
 
-     List() {
-		 lis = (T *)malloc(sizeof(T));
-         N = 0;
-	 }
+     List(T value) {
+		 N = value;
+	}
 
-     void add(T value) {
-        lis[N] = value;
-        N++;
-        lis =(T* )realloc(lis ,sizeof(T) * N);
+     void add(List *p, List *&pF) {
+		 p->pNext = pF;
+		 pF = p;
      }
 
-     void printAll() {
-         for(int i = 0; i < N; i++) {
-             cout << lis[i] << endl;
+     void printAll(List *pF) {
+		 List *p = pF;
+		 while (p != NULL) {
+			 cout << p->N << endl;
+			 p = p->pNext;
          }
      }
 };
@@ -42,29 +42,30 @@ int main() {
     for(int i = 0; i < N; i ++) {
         cin >> type;
         if(type == 's') {
-            List<string>* lis = new List<string>();
+			List<string>* pF = NULL;
             int count = 0;
             cin >> count;
-            for(int i = 0; i < count; i ++) {
-                string str;
-                cin >> str;
-                lis->add(str);
+            for(int i = 0; i < count; i++) {
+				string str="";
+				cin >> str;
+				List<string>* l = new List<string>(str);
+                pF->add(l, pF);
             }
-            lis->printAll();
-            delete lis;
-        } else if (type == 'i') {
-            List<int>* lis = new List<int>();
+            pF->printAll(pF);
+		} else if (type == 'i') {
+            List<int>* pF = NULL;
             int count = 0;
             cin >> count;
-            for(int i = 0; i < count; i ++) {
+            for(int i = 0; i < count; i++) {
                 int number;
                 cin >> number;
-                lis->add(number);
+				List<int>* l = new List<int>(number);
+                pF->add(l, pF);
             }
-            lis->printAll();
-            delete lis;
-        }
-
+			pF->printAll(pF);
+		}
+		
     }
+	system("pause");
     return 0;
 }
